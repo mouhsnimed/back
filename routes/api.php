@@ -25,14 +25,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 
+Route::post('/person',  [PersonController::class,'store']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     // Person Routes
-    Route::get('/person', [PersonController::class,'index']);
-    Route::get('/person/{id}',  [PersonController::class,'show']);
-    Route::post('/person',  [PersonController::class,'store']);
-    Route::put('/person/{id}',  [PersonController::class,'update']);
-    Route::delete('/person/{id}',  [PersonController::class,'destroy']);
+    // Route::get('/person', [PersonController::class,'index']);
+    // Route::get('/person/{id}',  [PersonController::class,'show']);
+
+    // Route::put('/person/{id}',  [PersonController::class,'update']);
+    // Route::delete('/person/{id}',  [PersonController::class,'destroy']);
 
     // Catégorie Routes
     Route::get('/categorieAnnonce', [CategorieAnonnceController::class,'index']);

@@ -43,7 +43,7 @@ class PersonController extends Controller
         $person->email = $request->email;
         $person->numero = $request->numero;
         $person->type = $request->type;
-        $person->password = $request->password;
+        $person->password = bcrypt($request->password);
 
         if($person->save())
         {
