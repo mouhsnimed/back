@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -15,34 +16,53 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->get();
-
-        return view('user.index', ['users' => $users]);
+        $users = User::paginate(10);
+        return UserResource::collection($users);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $users = DB::table('user')->get();
+        $user = new User();
+        $user->nom = $request->nom;
+        $user->prenoms = $request->prenoms;
+        $user->email = $request->email;
+        $user->numero = $request->numero;
+        $user->type = $request->type;
+        $user->password = bcrypt($request->password);
 
-        return view('user.index', ['users' => $users]);
+        if($user->save())
+        {
+            return new UserResource($user);
+        }
     }
 
-    public function show(int $IdUser)
+    public function show(int $id)
     {
-        // return $article;
+        $user = User::findOrfail($id);
+        return new UserResource($user);
     }
 
-    public function update(Request $request, int $IdUser)
+    public function update(Request $request, int $id)
     {
-        // $article->update($request->all());
-
-        // return response()->json($article, 200);
+        $user = User::findOrfail($id);
+        $user->nom = $request->nom;
+        $user->prenoms = $request->prenoms;
+        $user->email = $request->email;
+        $user->numero = $request->numero;
+        $user->type = $request->type;
+        $user->password = bcrypt($request->password);
+        if($user->save())
+        {
+            return new UserResource($request);
+        }
     }
 
-    public function delete(int $IdUser)
+    public function delete(int $id)
     {
-        // $article->delete();
-
-        return response()->json(null, 204);
+        $user = User::findOrfail($id);
+        if($user->delete())
+        {
+            return new UserResource($user);
+        }
     }
 }

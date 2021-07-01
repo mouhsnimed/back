@@ -32,10 +32,10 @@ class CreateAnnoncesTable extends Migration
             $table->string('etat_bien');
             $table->string('special');
             $table->boolean('meuble');
-            $table->foreignId('person_id');
+            $table->foreignId('user_id');
             $table->foreignId('categorie_annonce_id');
             $table->timestamps();
-            $table->foreign('person_id')->references('id')->on('persons');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('categorie_annonce_id')->references('id')->on('categorie_annonces');
         });
     }

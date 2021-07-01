@@ -16,9 +16,9 @@ class CreateRechercheSpecialsTable extends Migration
         Schema::create('recherche_specials', function (Blueprint $table) {
             $table->id();
             $table->text('critere');
-            $table->foreignId('person_id');
+            $table->foreignId('user_id');
             $table->timestamps();
-            $table->foreign('person_id')->references('id')->on('persons');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

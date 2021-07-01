@@ -19,9 +19,9 @@ class CreateShootersTable extends Migration
             $table->string('type_equipement');
             $table->string('description');
             $table->string('experience');
-            $table->foreignId('person_id');
+            $table->foreignId('user_id');
             $table->timestamps();
-            $table->foreign('person_id')->references('id')->on('persons');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
