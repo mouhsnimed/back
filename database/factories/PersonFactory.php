@@ -24,7 +24,7 @@ class PersonFactory extends Factory
     {
         return [
             'nom' => $this->faker->name(),
-            'prenoms' => $this->faker->name(),
+            'prenom' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'numero' => rand(0000000,99999999),
             'type' => 'annonceur',

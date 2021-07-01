@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->nom = $request->nom;
-        $user->prenoms = $request->prenoms;
+        $user->prenom = $request->prenom;
         $user->email = $request->email;
         $user->numero = $request->numero;
         $user->type = $request->type;
@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $user = User::findOrfail($id);
         $user->nom = $request->nom;
-        $user->prenoms = $request->prenoms;
+        $user->prenom = $request->prenom;
         $user->email = $request->email;
         $user->numero = $request->numero;
         $user->type = $request->type;

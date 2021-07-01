@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
          $validator = validator::make($request->all(),[
              'nom' => 'required',
-             'prenoms' => 'required',
+             'prenom' => 'required',
              'numero' => 'required',
              'type' => 'required',
              'email' => 'required|email',
@@ -30,7 +30,7 @@ class AuthController extends Controller
 
          $user = new User();
          $user->nom = $request->nom;
-         $user->prenoms =$request->prenoms;
+         $user->prenom =$request->prenom;
          $user->email =$request->email;
          $user->numero =$request->numero;
          $user->type =$request->type;
