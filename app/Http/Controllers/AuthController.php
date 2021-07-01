@@ -16,15 +16,16 @@ class AuthController extends Controller
              'prenom' => 'required',
              'numero' => 'required',
              'type' => 'required',
-             'email' => 'required|email',
+             'email' => 'required|email|unique:users',
              'password' => 'required'
          ]);
 
          if($validator->fails())
          {
+            $messages = $validator->messages();
              return response()->json([
                  'status_code' => 400,
-                 'message'=>'Bad Request'
+                 'message'=>$messages,
                 ]);        
          }
 
