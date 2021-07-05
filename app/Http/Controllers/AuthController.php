@@ -64,9 +64,8 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials))
         {
             return response()->json([
-                'status_code' => 500,
-                'message' => 'Unauthorized'
-            ]);
+                'message' => 'login or password incorrect '
+            ], 400);
         }
 
         $user = User::where('email',$request->email)->first();
