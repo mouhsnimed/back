@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,10 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('/user/{id}',  [UserController::class,'update']);
     Route::delete('/user/{id}',  [UserController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);
+    Route::post('/addAnnonce',[AnnonceController::class,'add']);
+
+
+
 });
 
 // Catégorie Routes
