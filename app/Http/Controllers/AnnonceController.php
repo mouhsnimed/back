@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class AnnonceController extends Controller
 {
     
-    public function add(Request $request) {
+    public function store(Request $request) {
         $validator = validator::make($request->all(),[
             'titre' => 'required',
             'type_annonce' => 'required',
@@ -67,7 +67,7 @@ class AnnonceController extends Controller
         $annonce->save();
 
         return response()->json([
-            'status_code' => 200,
+            'id' => $annonce->id,
             'message' => 'Annonce created'
         ]);
 

@@ -24,9 +24,8 @@ class AuthController extends Controller
          {
             $messages = $validator->messages();
              return response()->json([
-                 'status_code' => 400,
                  'message'=>$messages,
-                ]);        
+                ], 400);        
          }
 
          $user = new User();

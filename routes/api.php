@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieAnonnceController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('/user/{id}',  [UserController::class,'update']);
     Route::delete('/user/{id}',  [UserController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);
-    Route::post('/addAnnonce',[AnnonceController::class,'add']);
+    Route::post('/addAnnonce',[AnnonceController::class,'store']);
+    Route::post('/uploadFiles',[MediaController::class,'store']);
 
 
 
