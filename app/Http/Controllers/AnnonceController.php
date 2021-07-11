@@ -31,10 +31,7 @@ class AnnonceController extends Controller
 
         if($validator->fails())
         {
-           $messages = $validator->messages();
-            return response()->json([
-                'message'=>$messages,
-               ], 400);        
+            return response()->json(['error'=>$validator->errors()], 400);       
         }
 
         $annonce = new annonce();
