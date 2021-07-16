@@ -22,7 +22,7 @@ class AuthController extends Controller
 
          if($validator->fails())
          {
-            $messages = $validator->messages();
+            $messages = $validator->getMessageBag();
              return response()->json([
                  'status_code' => 400,
                  'message'=>$messages,

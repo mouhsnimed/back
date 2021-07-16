@@ -4,7 +4,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategorieAnonnceController;
+use App\Http\Controllers\CategorieAnnonceController;
+use App\Http\Controllers\AnnonceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,19 +24,34 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+
 Route::get('/user', [UserController::class,'index']);
+Route::get('/user/{id}',  [UserController::class,'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     // User Routes
-    Route::get('/user/{id}',  [UserController::class,'show']);
     Route::put('/user/{id}',  [UserController::class,'update']);
     Route::delete('/user/{id}',  [UserController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);
+
+    // Need user auth
+    Route::post('/Annonce',  [AnnonceController::class,'store']);
+    Route::put('/Annonce/{id}',  [AnnonceController::class,'update']);
+    Route::delete('/Annonce/{id}',  [AnnonceController::class,'destroy']);
+
+    // need user auth
+    Route::post('/categorieAnnonce',  [CategorieAnnonceController::class,'store']);
+    Route::put('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'update']);
+    Route::delete('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'destroy']);
 });
 
 // Catégorie Routes
-Route::get('/categorieAnnonce', [CategorieAnonnceController::class,'index']);
-Route::get('/categorieAnnonce/{id}',  [CategorieAnonnceController::class,'show']);
-Route::post('/categorieAnnonce',  [CategorieAnonnceController::class,'store']);
-Route::put('/categorieAnnonce/{id}',  [CategorieAnonnceController::class,'update']);
-Route::delete('/categorieAnnonce/{id}',  [CategorieAnonnceController::class,'destroy']);
+Route::get('/categorieAnnonce', [CategorieAnnonceController::class,'index']);
+Route::get('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'show']);
+
+
+// Catégorie Routes
+Route::get('/Annonce', [AnnonceController::class,'index']);
+Route::get('/Annonce/{id}',  [AnnonceController::class,'show']);
+Route::post('/Annonce/search',  [AnnonceController::class,'search']);
+Route::post('/Annonce/search/{idLast}',  [AnnonceController::class,'search']);

@@ -7,7 +7,7 @@ use App\Models\categorie_annonce;
 use App\Http\Resources\CategorieAnnonceRessource;
 use Exception;
 
-class CategorieAnonnceController extends Controller
+class CategorieAnnonceController extends Controller
 {
     /**
      * Display a listing of the resource.
