@@ -16,8 +16,8 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->string('type');
-            $table->float('taille');
+            // $table->string('type');
+            // $table->float('taille');
             $table->dateTime('date_upload');
             $table->string('chemin');
             $table->foreignId('annonce_id');

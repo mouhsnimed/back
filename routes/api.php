@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieAnnonceController;
-use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +34,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put('/user/{id}',  [UserController::class,'update']);
     Route::delete('/user/{id}',  [UserController::class,'destroy']);
     Route::post('/logout',[AuthController::class,'logout']);
-
-    // Need user auth
-    Route::post('/Annonce',  [AnnonceController::class,'store']);
-    Route::put('/Annonce/{id}',  [AnnonceController::class,'update']);
-    Route::delete('/Annonce/{id}',  [AnnonceController::class,'destroy']);
-
-    // need user auth
-    Route::post('/categorieAnnonce',  [CategorieAnnonceController::class,'store']);
-    Route::put('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'update']);
-    Route::delete('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'destroy']);
+    Route::post('/addAnnonce',[AnnonceController::class,'store']);
+    Route::post('/uploadFiles',[MediaController::class,'store']);
 });
 
 // Catégorie Routes

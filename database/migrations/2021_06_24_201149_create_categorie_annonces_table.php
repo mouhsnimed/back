@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\categorie_annonce;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,28 @@ class CreateCategorieAnnoncesTable extends Migration
             $table->string('nom');
             $table->timestamps();
         });
+
+
+        $data =  array(
+            [
+                'name' => 'Duplex',
+            ],
+            [
+                'name' => 'Maison',
+            ],
+            [
+                'name' => 'Villa',
+            ],
+            [
+                'name' => 'Studio',
+            ],
+        );
+        foreach ($data as $datum){
+            $category = new categorie_annonce(); //The Category is the model for your migration
+            $category->nom =$datum['name'];
+            $category->save();
+        }
+
     }
 
     /**
