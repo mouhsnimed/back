@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AnnonceController extends Controller
 {
-<<<<<<< HEAD
     /**
      * Display a listing of the resource.
      *
@@ -114,25 +113,6 @@ class AnnonceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */    
-    public function store(Request $request) 
-    {
-        $validator = validator::make($request->all(),[
-            'titre' => 'required',
-            'type_annonce' => 'required',
-            'ville' => 'required',
-            'adresse' => 'required',
-            'localisation_geo' => 'required',
-            'superficie' => 'required',
-            'prix' => 'required',
-            'nombre_chambre' => 'required',
-            'nombre_bain' => 'required',
-            'nombre_salon' => 'required',
-            'description' => 'required',
-            'etage' => 'required',
-            'etat_bien' => 'required',
-            'meuble' => 'required',
-            'categorie_annonce_id' => 'required',
-=======
     public function store(Request $request)
     {
         $validator = validator::make($request->all(), [
@@ -151,7 +131,6 @@ class AnnonceController extends Controller
             "etat_bien" => "required",
             "meuble" => "required",
             "categorie_annonce_id" => "required",
->>>>>>> d609a9c (manage annonce)
         ]);
 
         if ($validator->fails()) {
@@ -190,7 +169,6 @@ class AnnonceController extends Controller
             "id" => $annonce->id,
             "message" => "Annonce created",
         ]);
-<<<<<<< HEAD
     }
 
     /**
@@ -296,7 +274,5 @@ class AnnonceController extends Controller
         } catch (Exception $ex) {
             return new AnnonceRessource(['error']);
         }
-=======
->>>>>>> d609a9c (manage annonce)
     }
 }
