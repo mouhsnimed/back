@@ -30,8 +30,7 @@ class UserController extends Controller
         $user->type = $request->type;
         $user->password = bcrypt($request->password);
 
-        if($user->save())
-        {
+        if ($user->save()) {
             return new UserResource($user);
         }
     }
@@ -51,8 +50,7 @@ class UserController extends Controller
         $user->numero = $request->numero;
         $user->type = $request->type;
         $user->password = bcrypt($request->password);
-        if($user->save())
-        {
+        if ($user->save()) {
             return new UserResource($request);
         }
     }
@@ -60,8 +58,7 @@ class UserController extends Controller
     public function delete(int $id)
     {
         $user = User::findOrfail($id);
-        if($user->delete())
-        {
+        if ($user->delete()) {
             return new UserResource($user);
         }
     }
