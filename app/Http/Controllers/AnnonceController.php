@@ -19,80 +19,69 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        try
-        {
+        try {
             $annonces = annonce::paginate(6);
             return AnnonceRessource::collection($annonces);
-        }         
-        catch(Exception $ex)
-        {
-            return new AnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new AnnonceRessource(["error"]);
         }
     }
 
-
     public function search(Request $request)
     {
-        try
-        {  
-            $annonces = new Collection();            
+        try {
+            $annonces = new Collection();
 
             $critere = [];
-            $critere[] = ['type_annonce', '=',$request->type_annonce];
-            $critere[] = ['categorie_annonce_id', '=',$request->categorie_annonce_id];
-            $critere[] = ['ville', '=', $request->ville];
+            $critere[] = ["type_annonce", "=", $request->type_annonce];
+            $critere[] = [
+                "categorie_annonce_id",
+                "=",
+                $request->categorie_annonce_id,
+            ];
+            $critere[] = ["ville", "=", $request->ville];
 
-            if($request->superficie1 != "")
-            {
-                $critere[] = ['prix', '>=', $request->superficie1];
+            if ($request->superficie1 != "") {
+                $critere[] = ["prix", ">=", $request->superficie1];
             }
 
-            if($request->superficie2 != "")
-            {
-                $critere[] = ['prix', '<=', $request->superficie2];
+            if ($request->superficie2 != "") {
+                $critere[] = ["prix", "<=", $request->superficie2];
             }
 
-            if($request->prix1 != "")
-            {
-                $critere[] = ['prix', '>=', $request->prix1];
+            if ($request->prix1 != "") {
+                $critere[] = ["prix", ">=", $request->prix1];
             }
 
-            if($request->prix2 != "")
-            {
-                $critere[] = ['prix', '<=', $request->prix2];
-            }                  
+            if ($request->prix2 != "") {
+                $critere[] = ["prix", "<=", $request->prix2];
+            }
 
-            if($request->nombre_chambre != "")
-            {
-                $critere[] = ['nombre_chambre', '=', $request->nombre_chambre];
-            }    
+            if ($request->nombre_chambre != "") {
+                $critere[] = ["nombre_chambre", "=", $request->nombre_chambre];
+            }
 
-            if($request->nombre_bain != "")
-            {
-                $critere[] = ['nombre_bain', '=', $request->nombre_bain];
-            }      
-            
-            if($request->nombre_salon != "")
-            {
-                $critere[] = ['nombre_salon', '=', $request->nombre_salon];
-            }     
-            
-            if($request->etage != "")
-            {
-                $critere[] = ['etage', '=', $request->etage];
-            }        
-        
-            if($request->meuble != "")
-            {
-                $critere[] = ['meuble', '=', $request->meuble];
-            }        
+            if ($request->nombre_bain != "") {
+                $critere[] = ["nombre_bain", "=", $request->nombre_bain];
+            }
 
-            
-            $annonces = annonce::where($critere)->orderby("id")->paginate(6); 
-            return AnnonceRessource::Collection($annonces);            
-        }         
-        catch(Exception $ex)
-        {
+            if ($request->nombre_salon != "") {
+                $critere[] = ["nombre_salon", "=", $request->nombre_salon];
+            }
+
+            if ($request->etage != "") {
+                $critere[] = ["etage", "=", $request->etage];
+            }
+
+            if ($request->meuble != "") {
+                $critere[] = ["meuble", "=", $request->meuble];
+            }
+
+            $annonces = annonce::where($critere)
+                ->orderby("id")
+                ->paginate(6);
+            return AnnonceRessource::Collection($annonces);
+        } catch (Exception $ex) {
             return new AnnonceRessource([$ex->getMessage()]);
         }
     }
@@ -112,7 +101,7 @@ class AnnonceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */    
+     */
     public function store(Request $request)
     {
         $validator = validator::make($request->all(), [
@@ -179,23 +168,17 @@ class AnnonceController extends Controller
      */
     public function show($id)
     {
-        try
-        {
+        try {
             $annonce = annonce::findorfail($id);
-        
-            if(!empty($annonce))
-            {
+
+            if (!empty($annonce)) {
                 return new AnnonceRessource($annonce);
+            } else {
+                return new AnnonceRessource(["No found"]);
             }
-            else
-            {
-                return new AnnonceRessource(['No found']);
-            }
-        }        
-        catch(Exception $ex)
-        {
-            return new AnnonceRessource(['error']);
-        }        
+        } catch (Exception $ex) {
+            return new AnnonceRessource(["error"]);
+        }
     }
 
     /**
@@ -218,8 +201,7 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try
-        {
+        try {
             $annonce = annonce::findorfail($id);
             $annonce->titre = $request->titre;
             $annonce->type_annonce = $request->type_annonce;
@@ -240,18 +222,13 @@ class AnnonceController extends Controller
             $annonce->user_id = $request->user_id;
             $annonce->categorie_annonce_id = $request->categorie_annonce_id;
 
-            if($annonce->save())
-            {
+            if ($annonce->save()) {
                 return new AnnonceRessource($annonce);
+            } else {
+                return new AnnonceRessource(["error"]);
             }
-            else
-            {
-                return new AnnonceRessource(['error']);
-            }
-        }
-        catch(Exception $ex)
-        {
-            return new AnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new AnnonceRessource(["error"]);
         }
     }
 
@@ -265,14 +242,14 @@ class AnnonceController extends Controller
     {
         try {
             $annonce = annonce::findorfail($id);
-    
+
             if ($annonce->delete()) {
                 return new AnnonceRessource($annonce);
             } else {
-                return new AnnonceRessource(['error']);
+                return new AnnonceRessource(["error"]);
             }
         } catch (Exception $ex) {
-            return new AnnonceRessource(['error']);
+            return new AnnonceRessource(["error"]);
         }
     }
 }

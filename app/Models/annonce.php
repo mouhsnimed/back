@@ -12,23 +12,22 @@ class annonce extends Model
     protected $table = "annonces";
 
     protected $fillable = [
-        'titre',
-        'type_annonce',
-        'pays',
-        'ville',
-        'adresse',
-        'localisation_geo',
-        'superficie',
-        'prix',
-        'nombre_chambre',
-        'nombre_salon',
-        'description',
-        'etage',
-        'etat_bien',
-        'special',
-        'meuble',
-        'user_id',
-        'categorie_annonce_id'
+        "titre",
+        "type_annonce",
+        "pays",
+        "ville",
+        "adresse",
+        "localisation_geo",
+        "superficie",
+        "prix",
+        "nombre_chambre",
+        "nombre_salon",
+        "description",
+        "etage",
+        "etat_bien",
+        "special",
+        "meuble",
+        "user_id",
+        "categorie_annonce_id",
     ];
-
 }
