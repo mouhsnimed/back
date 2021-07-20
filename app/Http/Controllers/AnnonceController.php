@@ -170,7 +170,6 @@ class AnnonceController extends Controller
     {
         try {
             $annonce = annonce::findorfail($id);
-
             if (!empty($annonce)) {
                 return new AnnonceRessource($annonce);
             } else {
@@ -251,5 +250,11 @@ class AnnonceController extends Controller
         } catch (Exception $ex) {
             return new AnnonceRessource(["error"]);
         }
+    }
+
+
+    public function myAnnonces() {
+          $myannonce = annonce::join('media', 'media.annonce_id', '=', 'annonces.id')->where('user_id', Auth::user()->id)->groupBy('media.annonce_id')->get(['annonces.*', 'media.chemin']);
+        return response()->json($myannonce);
     }
 }
