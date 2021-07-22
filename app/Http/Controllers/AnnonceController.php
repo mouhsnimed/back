@@ -44,12 +44,12 @@ class AnnonceController extends Controller
 
             if($request->superficie1 != "")
             {
-                $critere[] = ['prix', '>=', $request->superficie1];
+                $critere[] = ['superficie', '>=', $request->superficie1];
             }
 
             if($request->superficie2 != "")
             {
-                $critere[] = ['prix', '<=', $request->superficie2];
+                $critere[] = ['superficie', '<=', $request->superficie2];
             }
 
             if($request->prix1 != "")
@@ -86,7 +86,6 @@ class AnnonceController extends Controller
             {
                 $critere[] = ['meuble', '=', $request->meuble];
             }        
-
             
             $annonces = annonce::where($critere)->orderby("id")->paginate(6); 
             return AnnonceRessource::Collection($annonces);            

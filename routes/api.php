@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieAnnonceController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\IllustrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,8 @@ Route::get('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'show']
 Route::get('/Annonce', [AnnonceController::class,'index']);
 Route::get('/Annonce/{id}',  [AnnonceController::class,'show']);
 Route::post('/Annonce/search',  [AnnonceController::class,'search']);
-Route::post('/Annonce/search/{idLast}',  [AnnonceController::class,'search']);
+
+// Illustration Route
+Route::get('/Illustration', [IllustrationController::class,'index']);
+Route::get('/Illustration/{id}',  [IllustrationController::class,'show']);
+Route::post('/Illustration/search',  [IllustrationController::class,'search']);
