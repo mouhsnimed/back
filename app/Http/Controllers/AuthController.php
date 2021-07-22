@@ -11,74 +11,77 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-         $validator = validator::make($request->all(),[
-             'nom' => 'required',
-             'prenom' => 'required',
-             'numero' => 'required',
-             'type' => 'required',
-             'email' => 'required|email|unique:users',
-             'password' => 'required'
-         ]);
+        $validator = validator::make($request->all(), [
+            "nom" => "required",
+            "prenom" => "required",
+            "numero" => "required",
+            "type" => "required",
+            "email" => "required|email|unique:users",
+            "password" => "required",
+        ]);
 
-         if($validator->fails())
-         {
-            return response()->json(['error'=>$validator->errors()], 400);       
-         }
+        if ($validator->fails()) {
+            return response()->json(["error" => $validator->errors()], 400);
+        }
 
-         $user = new User();
-         $user->nom = $request->nom;
-         $user->prenom =$request->prenom;
-         $user->email =$request->email;
-         $user->numero =$request->numero;
-         $user->type =$request->type;
-         $user->password = bcrypt($request->password);
-         $user->save();
+        $user = new User();
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->email = $request->email;
+        $user->numero = $request->numero;
+        $user->type = $request->type;
+        $user->password = bcrypt($request->password);
+        $user->save();
 
-         return response()->json([
-             'status_code' => 200,
-             'message' => 'user created'
-         ]);
+        return response()->json([
+            "status_code" => 200,
+            "message" => "user created",
+        ]);
     }
 
     public function login(Request $request)
     {
-        $validator = validator::make($request->all(),[
-            'email' => 'required|email',
-            'password' => 'required'
+        $validator = validator::make($request->all(), [
+            "email" => "required|email",
+            "password" => "required",
         ]);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
-                'status_code' => 400,
-                'message'=>'Bad Request'
-               ]);        
+                "status_code" => 400,
+                "message" => "Bad Request",
+            ]);
         }
 
-        $credentials = request(['email','password']);
-        
-        if(!Auth::attempt($credentials))
-        {
-            return response()->json([
-                'message' => 'login or password incorrect '
-            ], 400);
+        $credentials = request(["email", "password"]);
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json(
+                [
+                    "message" => "login or password incorrect ",
+                ],
+                400
+            );
         }
 
-        $user = User::where('email',$request->email)->first();
-        $tokenResult = $user->createtoken('authToken')->plainTextToken;
+        $user = User::where("email", $request->email)->first();
+        $tokenResult = $user->createtoken("authToken")->plainTextToken;
 
         return response()->json([
-            'status_code' => 200,
-            'token' => $tokenResult
+            "status_code" => 200,
+            "token" => $tokenResult,
         ]);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $request
+            ->user()
+            ->currentAccessToken()
+            ->delete();
         return response()->json([
-            'status_code' => 200,
-            'message' => 'Token deleted'
+            "status_code" => 200,
+            "message" => "Token deleted",
         ]);
     }
 }

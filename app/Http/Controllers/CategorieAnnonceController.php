@@ -16,14 +16,11 @@ class CategorieAnnonceController extends Controller
      */
     public function index()
     {
-        try
-        {
+        try {
             $categories = categorie_annonce::paginate(10);
             return CategorieAnnonceRessource::collection($categories);
-        }         
-        catch(Exception $ex)
-        {
-            return new CategorieAnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new CategorieAnnonceRessource(["error"]);
         }
     }
 
@@ -45,23 +42,17 @@ class CategorieAnnonceController extends Controller
      */
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $categorie = new categorie_annonce();
             $categorie->nom = $request->nom;
-    
-            if($categorie->save())
-            {
+
+            if ($categorie->save()) {
                 return new CategorieAnnonceRessource($categorie);
+            } else {
+                return new CategorieAnnonceRessource(["error"]);
             }
-            else
-            {
-                return new CategorieAnnonceRessource(['error']);
-            }
-        } 
-        catch(Exception $ex)
-        {
-            return new CategorieAnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new CategorieAnnonceRessource(["error"]);
         }
     }
 
@@ -73,23 +64,17 @@ class CategorieAnnonceController extends Controller
      */
     public function show($id)
     {
-        try
-        {
+        try {
             $categorie = categorie_annonce::findorfail($id);
-        
-            if(!empty($categorie))
-            {
+
+            if (!empty($categorie)) {
                 return new CategorieAnnonceRessource($categorie);
+            } else {
+                return new CategorieAnnonceRessource(["No found"]);
             }
-            else
-            {
-                return new CategorieAnnonceRessource(['No found']);
-            }
-        }        
-        catch(Exception $ex)
-        {
-            return new CategorieAnnonceRessource(['error']);
-        }        
+        } catch (Exception $ex) {
+            return new CategorieAnnonceRessource(["error"]);
+        }
     }
 
     /**
@@ -112,23 +97,17 @@ class CategorieAnnonceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try
-        {
+        try {
             $categorie = categorie_annonce::findorfail($id);
             $categorie->nom = $request->nom;
 
-            if($categorie->save())
-            {
+            if ($categorie->save()) {
                 return new CategorieAnnonceRessource($categorie);
+            } else {
+                return new CategorieAnnonceRessource(["error"]);
             }
-            else
-            {
-                return new CategorieAnnonceRessource(['error']);
-            }
-        }
-        catch(Exception $ex)
-        {
-            return new CategorieAnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new CategorieAnnonceRessource(["error"]);
         }
     }
 
@@ -140,22 +119,16 @@ class CategorieAnnonceController extends Controller
      */
     public function destroy($id)
     {
-        try
-        {
+        try {
             $categorie = categorie_annonce::findorfail($id);
-    
-            if($categorie->delete())
-            {
+
+            if ($categorie->delete()) {
                 return new CategorieAnnonceRessource($categorie);
+            } else {
+                return new CategorieAnnonceRessource(["error"]);
             }
-            else
-            {
-                return new CategorieAnnonceRessource(['error']);
-            }
-        }
-        catch(Exception $ex)
-        {
-            return new CategorieAnnonceRessource(['error']);
+        } catch (Exception $ex) {
+            return new CategorieAnnonceRessource(["error"]);
         }
     }
 }

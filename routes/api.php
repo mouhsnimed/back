@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout',[AuthController::class,'logout']);
     Route::post('/addAnnonce',[AnnonceController::class,'store']);
     Route::post('/uploadFiles',[MediaController::class,'store']);
+    Route::get('/myAnnonces',[AnnonceController::class,'myAnnonces']);
 });
 
 // Catégorie Routes
