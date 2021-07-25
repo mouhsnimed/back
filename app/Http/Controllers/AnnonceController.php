@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\annonce;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\AnnonceRessource;
+use App\Models\media;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -176,12 +178,23 @@ class AnnonceController extends Controller
         try {
             $annonce = annonce::findorfail($id);
             if (!empty($annonce)) {
-                return new AnnonceRessource($annonce);
+                $user = User::findorfail($annonce->user_id);
+                // ["prix", "<=", $request->prix2];
+                $medias = media::where('annonce_id', '=', $id)->get();
+                return response()->json([
+                    "details" => $annonce,
+                    "user"=> $user,
+                    "medias"=> $medias
+                ]);
             } else {
-                return new AnnonceRessource(["No found"]);
+                return response()->json([
+                    "error" => "Aucune annonce n'a été trouvé",
+                ], 400);
             }
         } catch (Exception $ex) {
-            return new AnnonceRessource(["error"]);
+            return response()->json([
+                "error" => $id,
+            ], 400);
         }
     }
 
@@ -259,7 +272,7 @@ class AnnonceController extends Controller
 
 
     public function myAnnonces() {
-          $myannonce = annonce::join('media', 'media.annonce_id', '=', 'annonces.id')->where('user_id', Auth::user()->id)->groupBy('media.annonce_id')->get(['annonces.*', 'media.chemin']);
+        $myannonce = annonce::join('media', 'media.annonce_id', '=', 'annonces.id')->where('user_id', Auth::user()->id)->groupBy('media.annonce_id')->get(['annonces.*', 'media.chemin']);
         return response()->json($myannonce);
     }
 }
