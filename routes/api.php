@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategorieAnnonceController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\IllustrationController;
+use App\Http\Controllers\ShooterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +55,8 @@ Route::post('/Annonce/search',  [AnnonceController::class,'search']);
 Route::get('/Illustration', [IllustrationController::class,'index']);
 Route::get('/Illustration/{id}',  [IllustrationController::class,'show']);
 Route::post('/Illustration/search',  [IllustrationController::class,'search']);
+Route::put('/Illustration/vote/{id}',  [IllustrationController::class,'vote']);
+Route::put('/Illustration/search',  [IllustrationController::class,'search']);
+
+// Shooter Route
+Route::get('/Shooter', [ShooterController::class,'index']);

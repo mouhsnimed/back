@@ -19,7 +19,8 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        try {
+        try 
+        {
             $annonces = annonce::paginate(6);
             return AnnonceRessource::collection($annonces);
         } catch (Exception $ex) {
@@ -30,8 +31,6 @@ class AnnonceController extends Controller
     public function search(Request $request)
     {
         try {
-            $annonces = new Collection();
-
             $critere = [];
             $critere[] = ["type_annonce", "=", $request->type_annonce];
             $critere[] = [
@@ -41,7 +40,6 @@ class AnnonceController extends Controller
             ];
             $critere[] = ["ville", "=", $request->ville];
 
-<<<<<<< HEAD
             if($request->superficie1 != "")
             {
                 $critere[] = ['superficie', '>=', $request->superficie1];
@@ -50,14 +48,6 @@ class AnnonceController extends Controller
             if($request->superficie2 != "")
             {
                 $critere[] = ['superficie', '<=', $request->superficie2];
-=======
-            if ($request->superficie1 != "") {
-                $critere[] = ["prix", ">=", $request->superficie1];
-            }
-
-            if ($request->superficie2 != "") {
-                $critere[] = ["prix", "<=", $request->superficie2];
->>>>>>> 357a8731edfc2ca6a7d988c03fd1b69f07432712
             }
 
             if ($request->prix1 != "") {
@@ -72,7 +62,6 @@ class AnnonceController extends Controller
                 $critere[] = ["nombre_chambre", "=", $request->nombre_chambre];
             }
 
-<<<<<<< HEAD
             if($request->nombre_bain != "")
             {
                 $critere[] = ['nombre_bain', '=', $request->nombre_bain];
@@ -98,29 +87,6 @@ class AnnonceController extends Controller
         }         
         catch(Exception $ex)
         {
-=======
-            if ($request->nombre_bain != "") {
-                $critere[] = ["nombre_bain", "=", $request->nombre_bain];
-            }
-
-            if ($request->nombre_salon != "") {
-                $critere[] = ["nombre_salon", "=", $request->nombre_salon];
-            }
-
-            if ($request->etage != "") {
-                $critere[] = ["etage", "=", $request->etage];
-            }
-
-            if ($request->meuble != "") {
-                $critere[] = ["meuble", "=", $request->meuble];
-            }
-
-            $annonces = annonce::where($critere)
-                ->orderby("id")
-                ->paginate(6);
-            return AnnonceRessource::Collection($annonces);
-        } catch (Exception $ex) {
->>>>>>> 357a8731edfc2ca6a7d988c03fd1b69f07432712
             return new AnnonceRessource([$ex->getMessage()]);
         }
     }
