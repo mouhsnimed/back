@@ -266,7 +266,7 @@ class AnnonceController extends Controller
                 return new AnnonceRessource(["error"]);
             }
         } catch (Exception $ex) {
-            return new AnnonceRessource(["error"]);
+            return new AnnonceRessource([$ex]);
         }
     }
 
