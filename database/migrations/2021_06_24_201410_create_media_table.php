@@ -20,9 +20,9 @@ class CreateMediaTable extends Migration
             // $table->float('taille');
             $table->dateTime('date_upload');
             $table->string('chemin');
-            $table->foreignId('annonce_id');
+            $table->foreignId('annonce_id')->unsigned();
             $table->timestamps();
-            $table->foreign('annonce_id')->references('id')->on('annonces');
+            $table->foreign('annonce_id')->references('id')->on('annonces')->onDelete('cascade');
         });
     }
 

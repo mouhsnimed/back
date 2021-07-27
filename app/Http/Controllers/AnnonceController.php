@@ -259,7 +259,6 @@ class AnnonceController extends Controller
     {
         try {
             $annonce = annonce::findorfail($id);
-
             if ($annonce->delete()) {
                 return new AnnonceRessource($annonce);
             } else {
