@@ -16,17 +16,23 @@ class ShooterController extends Controller
      */
     public function index()
     {
-        try
-        {
-            $illustration = shooter::join('users','users.id','=','shooters.user_id')
-                                     ->paginate(6,['shooters.id as id_shooter','users.id as id_user','users.*','shooters.*']);            
+        try {
+            $illustration = shooter::join(
+                "users",
+                "users.id",
+                "=",
+                "shooters.user_id"
+            )->paginate(6, [
+                "shooters.id as id_shooter",
+                "users.id as id_user",
+                "users.*",
+                "shooters.*",
+            ]);
 
             return ShooterRessource::collection($illustration);
-        }         
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return new ShooterRessource([$ex->getMessage()]);
-        }        
+        }
     }
 
     /**

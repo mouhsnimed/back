@@ -17,64 +17,66 @@ class IllustrationController extends Controller
      */
     public function index()
     {
-        try
-        {
-            $illustration = illustration::join('shooters','shooters.id','=','illustrations.shooter_id')
-                                        ->join('users','users.id','=','shooters.user_id')
-                                        ->paginate(6,['shooters.id as id_shooter', 'users.id as id_user','users.*','shooters.*','illustrations.*']);            
+        try {
+            $illustration = illustration::join(
+                "shooters",
+                "shooters.id",
+                "=",
+                "illustrations.shooter_id"
+            )
+                ->join("users", "users.id", "=", "shooters.user_id")
+                ->paginate(6, [
+                    "shooters.id as id_shooter",
+                    "users.id as id_user",
+                    "users.*",
+                    "shooters.*",
+                    "illustrations.*",
+                ]);
 
             return IllustrationRessource::collection($illustration);
-        }         
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return new IllustrationRessource([$ex->getMessage()]);
         }
     }
 
     public function search(Request $request)
     {
-        try 
-        {                       
-            $illustration = illustration::join('shooters','shooters.id','=','illustrations.shooter_id')
-            ->join('users','users.id','=','shooters.user_id')
-            ->Where("titre", "like","%{$request->search_text}%")
-            ->orwhere("nom", "like","%{$request->search_text}%")            
-            ->orwhere("prenoms", "like", "%{$request->search_text}%")            
-            ->orderby("illustrations.id")->paginate(6); 
+        try {
+            $illustration = illustration::join(
+                "shooters",
+                "shooters.id",
+                "=",
+                "illustrations.shooter_id"
+            )
+                ->join("users", "users.id", "=", "shooters.user_id")
+                ->Where("titre", "like", "%{$request->search_text}%")
+                ->orwhere("nom", "like", "%{$request->search_text}%")
+                ->orwhere("prenoms", "like", "%{$request->search_text}%")
+                ->orderby("illustrations.id")
+                ->paginate(6);
             return illustrationRessource::Collection($illustration);
             // return new illustrationRessource($request);
-        }         
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return new illustrationRessource([$ex->getMessage()]);
         }
     }
 
-
-    public function vote(Request $request,$id)
+    public function vote(Request $request, $id)
     {
         try {
-
             $illustration = illustration::findorfail($id);
-            if($request->likeFor == true)
-            {
+            if ($request->likeFor == true) {
                 $illustration->vote_like++;
-            }
-            else
-            {
+            } else {
                 $illustration->vote_dislike++;
             }
 
-            if ($illustration->save()) 
-            {
+            if ($illustration->save()) {
                 return new IllustrationRessource($illustration);
-            } 
-            else 
-            {
+            } else {
                 return new IllustrationRessource(["error"]);
             }
-        } catch (Exception $ex) 
-        {
+        } catch (Exception $ex) {
             return new IllustrationRessource(["error"]);
         }
     }
@@ -103,7 +105,7 @@ class IllustrationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\illustration $illustration  
+     * @param  \App\Models\illustration $illustration
      * @return \Illuminate\Http\Response
      */
     public function show(illustration $illustration)
@@ -114,7 +116,7 @@ class IllustrationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\illustration $illustration 
+     * @param  \App\Models\illustration $illustration
      * @return \Illuminate\Http\Response
      */
     public function edit(illustration $illustration)
@@ -129,7 +131,7 @@ class IllustrationController extends Controller
      * @param  \App\Models\illustration $illustration
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,illustration $illustration)
+    public function update(Request $request, illustration $illustration)
     {
         //
     }

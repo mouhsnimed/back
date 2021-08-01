@@ -49,6 +49,7 @@ Route::get('/categorieAnnonce/{id}',  [CategorieAnnonceController::class,'show']
 
 // Catégorie Routes
 Route::get('/Annonce', [AnnonceController::class,'index']);
+Route::get('/AnnonceList', [AnnonceController::class,'list']);
 Route::get('/Annonce/{id}',  [AnnonceController::class,'show']);
 Route::post('/Annonce/search',  [AnnonceController::class,'search']);
 

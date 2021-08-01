@@ -21,8 +21,25 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        try 
-        {
+        try {
+            $annonces = annonce::join(
+                "media",
+                "media.annonce_id",
+                "=",
+                "annonces.id"
+            )
+                ->groupBy("media.annonce_id")
+                ->limit(6)
+                ->get(["annonces.*", "media.chemin"]);
+            return response()->json($annonces);
+        } catch (Exception $ex) {
+            return new AnnonceRessource(["error"]);
+        }
+    }
+
+    public function list()
+    {
+        try {
             $annonces = annonce::paginate(6);
             return AnnonceRessource::collection($annonces);
         } catch (Exception $ex) {
@@ -42,14 +59,12 @@ class AnnonceController extends Controller
             ];
             $critere[] = ["ville", "=", $request->ville];
 
-            if($request->superficie1 != "")
-            {
-                $critere[] = ['superficie', '>=', $request->superficie1];
+            if ($request->superficie1 != "") {
+                $critere[] = ["superficie", ">=", $request->superficie1];
             }
 
-            if($request->superficie2 != "")
-            {
-                $critere[] = ['superficie', '<=', $request->superficie2];
+            if ($request->superficie2 != "") {
+                $critere[] = ["superficie", "<=", $request->superficie2];
             }
 
             if ($request->prix1 != "") {
@@ -64,31 +79,27 @@ class AnnonceController extends Controller
                 $critere[] = ["nombre_chambre", "=", $request->nombre_chambre];
             }
 
-            if($request->nombre_bain != "")
-            {
-                $critere[] = ['nombre_bain', '=', $request->nombre_bain];
-            }      
-            
-            if($request->nombre_salon != "")
-            {
-                $critere[] = ['nombre_salon', '=', $request->nombre_salon];
-            }     
-            
-            if($request->etage != "")
-            {
-                $critere[] = ['etage', '=', $request->etage];
-            }        
-        
-            if($request->meuble != "")
-            {
-                $critere[] = ['meuble', '=', $request->meuble];
-            }        
-            
-            $annonces = annonce::where($critere)->orderby("id")->paginate(6); 
-            return AnnonceRessource::Collection($annonces);            
-        }         
-        catch(Exception $ex)
-        {
+            if ($request->nombre_bain != "") {
+                $critere[] = ["nombre_bain", "=", $request->nombre_bain];
+            }
+
+            if ($request->nombre_salon != "") {
+                $critere[] = ["nombre_salon", "=", $request->nombre_salon];
+            }
+
+            if ($request->etage != "") {
+                $critere[] = ["etage", "=", $request->etage];
+            }
+
+            if ($request->meuble != "") {
+                $critere[] = ["meuble", "=", $request->meuble];
+            }
+
+            $annonces = annonce::where($critere)
+                ->orderby("id")
+                ->paginate(6);
+            return AnnonceRessource::Collection($annonces);
+        } catch (Exception $ex) {
             return new AnnonceRessource([$ex->getMessage()]);
         }
     }
@@ -180,21 +191,27 @@ class AnnonceController extends Controller
             if (!empty($annonce)) {
                 $user = User::findorfail($annonce->user_id);
                 // ["prix", "<=", $request->prix2];
-                $medias = media::where('annonce_id', '=', $id)->get();
+                $medias = media::where("annonce_id", "=", $id)->get();
                 return response()->json([
                     "details" => $annonce,
-                    "user"=> $user,
-                    "medias"=> $medias
+                    "user" => $user,
+                    "medias" => $medias,
                 ]);
             } else {
-                return response()->json([
-                    "error" => "Aucune annonce n'a été trouvé",
-                ], 400);
+                return response()->json(
+                    [
+                        "error" => "Aucune annonce n'a été trouvé",
+                    ],
+                    400
+                );
             }
         } catch (Exception $ex) {
-            return response()->json([
-                "error" => $id,
-            ], 400);
+            return response()->json(
+                [
+                    "error" => $id,
+                ],
+                400
+            );
         }
     }
 
@@ -269,9 +286,17 @@ class AnnonceController extends Controller
         }
     }
 
-
-    public function myAnnonces() {
-        $myannonce = annonce::join('media', 'media.annonce_id', '=', 'annonces.id')->where('user_id', Auth::user()->id)->groupBy('media.annonce_id')->get(['annonces.*', 'media.chemin']);
+    public function myAnnonces()
+    {
+        $myannonce = annonce::join(
+            "media",
+            "media.annonce_id",
+            "=",
+            "annonces.id"
+        )
+            ->where("user_id", Auth::user()->id)
+            ->groupBy("media.annonce_id")
+            ->get(["annonces.*", "media.chemin"]);
         return response()->json($myannonce);
     }
 }

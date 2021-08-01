@@ -12,11 +12,11 @@ class illustration extends Model
     protected $table = "illustrations";
 
     protected $fillable = [
-        'titre',
-        'type',
-        'chemin',
-        'vote_like',
-        'vote_dislike',
-        'shooter_id'
+        "titre",
+        "type",
+        "chemin",
+        "vote_like",
+        "vote_dislike",
+        "shooter_id",
     ];
 }
